@@ -149,14 +149,14 @@ const App = () => {
               <span><strong>{offices.length}</strong> offices</span>
             </div>
           </div>
-          <div className={styles.artwork} aria-label="A team of twelve people across four offices">
+          <div className={styles.artwork} role="img" aria-label="A team of twelve people across four offices">
             <div className={styles.artTop}>
               <span>COMMON GROUND</span>
               <FiGlobe aria-hidden="true" />
             </div>
             <div className={styles.artMain}>
               <span className={styles.number}>{teamMembers.length}</span>
-              <span className={styles.people}>people<br />on the same<br />side of the work</span>
+              <span className={styles.artText}>people<br />on the same<br />side of the work</span>
             </div>
             <span className={styles.artMark} aria-hidden="true">
               <FiUsers />
@@ -222,3 +222,4 @@ const App = () => {
 };
 
 export default App;
+

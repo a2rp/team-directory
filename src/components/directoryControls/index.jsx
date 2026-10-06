@@ -18,7 +18,7 @@ const DirectoryControls = ({
   hasFilters,
   onClear,
 }) => {
-  const letters = [...new Set(peopleForLetters)]
+  const letters = [...new Set(peopleForLetters.map((person) => person.name.charAt(0).toUpperCase()))]
     .map((person) => person.name.charAt(0).toUpperCase())
     .sort();
 
@@ -30,7 +30,7 @@ const DirectoryControls = ({
           <h2 className={styles.title} id="people-title">Find your people.</h2>
         </div>
         <p className={styles.summary}>
-          {visibleCount} of {totalCount} teammates
+          {visibleCount} of {totalCount} {visibleCount === 1 ? "teammate" : "teammates"}
         </p>
       </div>
       <div className={styles.filters}>
@@ -106,4 +106,5 @@ const DirectoryControls = ({
 };
 
 export default DirectoryControls;
+
 
