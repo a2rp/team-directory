@@ -1,0 +1,30 @@
+﻿.button {
+  position: fixed;
+  z-index: 30;
+  right: max(24px, calc((100vw - 1440px) / 2));
+  bottom: 26px;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid var(--color-ink);
+  border-radius: 50%;
+  background: var(--color-yellow);
+  color: var(--color-ink);
+  font-size: 20px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--color-blue);
+    box-shadow: 0 0 0 4px rgb(42 77 224 / 15%);
+    outline: 0;
+  }
+
+  @media (max-width: 520px) {
+    right: 16px;
+    bottom: 16px;
+    width: 44px;
+    height: 44px;
+  }
+}
