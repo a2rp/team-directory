@@ -12,12 +12,13 @@ const DirectoryControls = ({
   onLetterChange,
   departments,
   offices,
+  peopleForLetters,
   visibleCount,
   totalCount,
   hasFilters,
   onClear,
 }) => {
-  const letters = [...new Set(departments.flatMap((team) => team.members))]
+  const letters = [...new Set(peopleForLetters)]
     .map((person) => person.name.charAt(0).toUpperCase())
     .sort();
 
@@ -76,7 +77,7 @@ const DirectoryControls = ({
       </div>
       <div className={styles.alphabet}>
         <span className={styles.browse}>Browse by first name</span>
-        <div className={styles.letters} aria-label="Filter by first initial">
+        <div className={styles.letters} role="group" aria-label="Filter by first initial">
           <button
             className={!activeLetter ? styles.active : ""}
             type="button"
@@ -105,3 +106,4 @@ const DirectoryControls = ({
 };
 
 export default DirectoryControls;
+
