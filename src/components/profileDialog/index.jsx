@@ -4,6 +4,7 @@ import styles from "./styles.module.css";
 
 const ProfileDialog = ({ person, onClose }) => {
   const closeButton = useRef(null);
+  const dialog = useRef(null);
 
   useEffect(() => {
     const previousFocus = document.activeElement;
@@ -15,6 +16,23 @@ const ProfileDialog = ({ person, onClose }) => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         onClose();
+        return;
+      }
+
+      if (event.key === "Tab") {
+        const focusable = dialog.current?.querySelectorAll(
+          'button:not([disabled]), a[href]',
+        );
+        const first = focusable?.[0];
+        const last = focusable?.[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus();
+        }
       }
     };
 
@@ -47,6 +65,7 @@ const ProfileDialog = ({ person, onClose }) => {
         aria-modal="true"
         aria-labelledby="profile-name"
         aria-describedby="profile-about"
+        ref={dialog}
       >
         <button
           className={styles.close}
@@ -90,3 +109,4 @@ const ProfileDialog = ({ person, onClose }) => {
 };
 
 export default ProfileDialog;
+
