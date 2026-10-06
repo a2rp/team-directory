@@ -1,122 +1,224 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+﻿import { useCallback, useMemo, useState } from "react";
+import { FiArrowRight, FiGlobe, FiUsers } from "react-icons/fi";
+import SiteHeader from "./components/siteHeader/index.jsx";
+import DirectoryControls from "./components/directoryControls/index.jsx";
+import PersonCard from "./components/personCard/index.jsx";
+import ProfileDialog from "./components/profileDialog/index.jsx";
+import TeamList from "./components/teamList/index.jsx";
+import OfficeList from "./components/officeList/index.jsx";
+import SiteFooter from "./components/siteFooter/index.jsx";
+import BackToTop from "./components/backToTop/index.jsx";
+import { teamMembers } from "./data/teamMembers.js";
+import styles from "./App.module.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+const teamDetails = [
+  {
+    name: "Product",
+    description: "Choose the right problems and shape what comes next.",
+    color: "yellow",
+  },
+  {
+    name: "Design",
+    description: "Make clear, useful paths through complex ideas.",
+    color: "blue",
+  },
+  {
+    name: "Engineering",
+    description: "Build dependable tools and thoughtful systems.",
+    color: "yellow",
+  },
+  {
+    name: "Customer",
+    description: "Listen closely and carry feedback into the work.",
+    color: "blue",
+  },
+  {
+    name: "People",
+    description: "Make room for good work and healthy teams.",
+    color: "yellow",
+  },
+  {
+    name: "Operations",
+    description: "Keep the details moving so everyone can focus.",
+    color: "blue",
+  },
+];
+
+const officeDetails = [
+  { name: "New York", region: "North America", color: "yellow" },
+  { name: "London", region: "United Kingdom", color: "blue" },
+  { name: "Toronto", region: "Canada", color: "yellow" },
+  { name: "Singapore", region: "Asia Pacific", color: "blue" },
+];
+
+const App = () => {
+  const [search, setSearch] = useState("");
+  const [department, setDepartment] = useState("all");
+  const [office, setOffice] = useState("all");
+  const [activeLetter, setActiveLetter] = useState("");
+  const [selectedPerson, setSelectedPerson] = useState(null);
+
+  const departments = teamDetails.map((team) => ({
+    ...team,
+    count: teamMembers.filter((person) => person.team === team.name).length,
+  }));
+
+  const offices = officeDetails.map((place) => ({
+    ...place,
+    count: teamMembers.filter((person) => person.office === place.name).length,
+  }));
+
+  const peopleBeforeLetter = useMemo(() => {
+    const searchText = search.trim().toLowerCase();
+
+    return teamMembers.filter((person) => {
+      const matchesText = [
+        person.name,
+        person.role,
+        person.team,
+        person.office,
+      ]
+        .join(" ")
+        .toLowerCase()
+        .includes(searchText);
+      const matchesTeam = department === "all" || person.team === department;
+      const matchesOffice = office === "all" || person.office === office;
+
+      return matchesText && matchesTeam && matchesOffice;
+    });
+  }, [search, department, office]);
+
+  const visiblePeople = activeLetter
+    ? peopleBeforeLetter.filter(
+        (person) => person.name.charAt(0).toUpperCase() === activeLetter,
+      )
+    : peopleBeforeLetter;
+
+  const handleClear = () => {
+    setSearch("");
+    setDepartment("all");
+    setOffice("all");
+    setActiveLetter("");
+  };
+
+  const handleTeamSelect = (teamName) => {
+    setSearch("");
+    setDepartment(teamName);
+    setOffice("all");
+    setActiveLetter("");
+    document.getElementById("people")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleOfficeSelect = (officeName) => {
+    setSearch("");
+    setDepartment("all");
+    setOffice(officeName);
+    setActiveLetter("");
+    document.getElementById("people")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleProfileClose = useCallback(() => {
+    setSelectedPerson(null);
+  }, []);
+
+  const hasFilters = Boolean(
+    search.trim() || department !== "all" || office !== "all" || activeLetter,
+  );
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className={styles.app} id="top">
+      <SiteHeader />
+      <main className={styles.main}>
+        <section className={styles.hero} aria-labelledby="hero-title">
+          <div className={styles.copy}>
+            <p className={styles.label}>One team, across four places</p>
+            <h1 className={styles.title} id="hero-title">
+              Good work starts with <em>good people.</em>
+            </h1>
+            <p className={styles.intro}>
+              Meet the people behind the work. Find a teammate, learn what they
+              do, and say hello.
+            </p>
+            <a className={styles.action} href="#people">
+              <span>Meet the team</span>
+              <FiArrowRight aria-hidden="true" />
+            </a>
+            <div className={styles.facts}>
+              <span><strong>{teamMembers.length}</strong> people</span>
+              <span><strong>{departments.length}</strong> teams</span>
+              <span><strong>{offices.length}</strong> offices</span>
+            </div>
+          </div>
+          <div className={styles.artwork} aria-label="A team of twelve people across four offices">
+            <div className={styles.artTop}>
+              <span>COMMON GROUND</span>
+              <FiGlobe aria-hidden="true" />
+            </div>
+            <div className={styles.artMain}>
+              <span className={styles.number}>{teamMembers.length}</span>
+              <span className={styles.people}>people<br />on the same<br />side of the work</span>
+            </div>
+            <span className={styles.artMark} aria-hidden="true">
+              <FiUsers />
+            </span>
+            <div className={styles.places}>
+              {offices.map((place) => (
+                <span key={place.name}>
+                  <span className={styles.dot} aria-hidden="true" />
+                  {place.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
 
-      <div className="ticks"></div>
+        <DirectoryControls
+          search={search}
+          onSearchChange={setSearch}
+          department={department}
+          onDepartmentChange={setDepartment}
+          office={office}
+          onOfficeChange={setOffice}
+          activeLetter={activeLetter}
+          onLetterChange={setActiveLetter}
+          departments={departments}
+          offices={offices}
+          peopleForLetters={peopleBeforeLetter}
+          visibleCount={visiblePeople.length}
+          totalCount={teamMembers.length}
+          hasFilters={hasFilters}
+          onClear={handleClear}
+        />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        {visiblePeople.length > 0 ? (
+          <section className={styles.people} aria-label="Team directory results">
+            {visiblePeople.map((person) => (
+              <PersonCard
+                key={person.id}
+                person={person}
+                onSelect={() => setSelectedPerson(person)}
+              />
+            ))}
+          </section>
+        ) : (
+          <div className={styles.empty}>
+            <span className={styles.emptyIcon}><FiUsers aria-hidden="true" /></span>
+            <h2>No teammates found</h2>
+            <p>Try a different name, team, office, or first initial.</p>
+            <button type="button" onClick={handleClear}>Clear filters</button>
+          </div>
+        )}
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
-}
+        <TeamList teams={departments} onSelect={handleTeamSelect} />
+        <OfficeList offices={offices} onSelect={handleOfficeSelect} />
+      </main>
+      <SiteFooter />
+      <BackToTop />
+      {selectedPerson && (
+        <ProfileDialog person={selectedPerson} onClose={handleProfileClose} />
+      )}
+    </div>
+  );
+};
 
-export default App
+export default App;
