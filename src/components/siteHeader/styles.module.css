@@ -1,0 +1,139 @@
+﻿.header {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  right: 0;
+  left: 0;
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-paper);
+
+  .inner {
+    display: flex;
+    width: min(100% - 64px, 1440px);
+    height: 76px;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.06em;
+  }
+
+  .mark {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-yellow);
+    color: var(--color-ink);
+    font-size: 19px;
+  }
+
+  .navigation {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+  }
+
+  .navLink {
+    padding: 8px 0;
+    border-bottom: 2px solid transparent;
+    color: var(--color-muted);
+    font-size: 14px;
+    font-weight: 700;
+    transition: color 160ms ease, border-color 160ms ease;
+  }
+
+  .navLink:hover,
+  .navLink:focus-visible {
+    border-color: var(--color-blue);
+    color: var(--color-blue);
+  }
+
+  .repository {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    gap: 8px;
+    padding: 0 13px;
+    border: 1px solid var(--color-ink);
+    border-radius: 4px;
+    background: transparent;
+    font-size: 13px;
+    font-weight: 700;
+    transition: color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+
+    .arrow {
+      color: var(--color-blue);
+    }
+
+    &:hover,
+    &:focus-visible {
+      background: var(--color-ink);
+      box-shadow: 0 3px 0 var(--color-yellow);
+      color: var(--color-white);
+
+      .arrow {
+        color: var(--color-yellow);
+      }
+    }
+  }
+
+  @media (max-width: 760px) {
+    .inner {
+      width: min(100% - 32px, 1440px);
+      height: 68px;
+    }
+
+    .navigation {
+      gap: 16px;
+    }
+
+    .navLink {
+      font-size: 13px;
+    }
+
+    .repository {
+      min-height: 40px;
+      padding: 0 10px;
+
+      .arrow {
+        display: none;
+      }
+    }
+  }
+
+  @media (max-width: 520px) {
+    .brand {
+      gap: 7px;
+      font-size: 16px;
+    }
+
+    .mark {
+      width: 32px;
+      height: 32px;
+      font-size: 16px;
+    }
+
+    .navigation {
+      gap: 11px;
+    }
+
+    .navLink {
+      font-size: 12px;
+    }
+
+    .repository {
+      gap: 6px;
+      padding: 0 8px;
+      font-size: 12px;
+    }
+  }
+}
