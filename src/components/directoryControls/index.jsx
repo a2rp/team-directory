@@ -18,9 +18,11 @@ const DirectoryControls = ({
   hasFilters,
   onClear,
 }) => {
-  const letters = [...new Set(peopleForLetters.map((person) => person.name.charAt(0).toUpperCase()))]
-    .map((person) => person.name.charAt(0).toUpperCase())
-    .sort();
+  const letters = [
+    ...new Set(
+      peopleForLetters.map((person) => person.name.charAt(0).toUpperCase()),
+    ),
+  ].sort();
 
   return (
     <section className={styles.section} id="people" aria-labelledby="people-title">
@@ -106,5 +108,6 @@ const DirectoryControls = ({
 };
 
 export default DirectoryControls;
+
 
 
