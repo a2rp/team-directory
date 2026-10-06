@@ -1,116 +1,120 @@
 ﻿.footer {
-  padding: 58px 0 62px;
-  background: var(--color-ink);
-  color: var(--color-white);
-
-  .inner {
-    display: grid;
-    width: min(100% - 64px, 1440px);
-    grid-template-columns: 1fr auto;
-    gap: 50px;
-    margin: 0 auto;
-  }
-
-  .credit {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-  }
-
-  .logo {
-    display: inline-flex;
-    width: 90px;
-    min-height: 46px;
-    align-items: center;
-    margin-bottom: 20px;
-
-    img {
-      width: 90px;
-      max-height: 44px;
-      object-fit: contain;
-    }
-  }
-
-  .credit p {
-    max-width: 320px;
-    color: #c6c4bb;
-    font-size: 13px;
-  }
-
-  .credit p a {
+    padding: 58px 0 62px;
+    background: var(--color-ink);
     color: var(--color-white);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
 
-  .source {
-    display: inline-flex;
-    min-height: 42px;
-    align-items: center;
-    gap: 8px;
-    margin-top: 22px;
-    padding: 0 12px;
-    border: 1px solid #65655e;
-    font-size: 13px;
-    transition: border-color 160ms ease, box-shadow 160ms ease;
-
-    &:hover,
-    &:focus-visible {
-      border-color: var(--color-yellow);
-      box-shadow: 0 3px 0 var(--color-yellow);
-    }
-  }
-
-  .links {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(120px, auto));
-    gap: 50px;
-  }
-
-  .group {
-    display: grid;
-    align-content: start;
-    justify-items: start;
-    gap: 9px;
-
-    h2 {
-      margin-bottom: 6px;
-      color: var(--color-yellow);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    a {
-      color: #d0cec6;
-      font-size: 13px;
-      transition: color 160ms ease, box-shadow 160ms ease;
-
-      &:hover,
-      &:focus-visible {
-        box-shadow: 0 1px 0 var(--color-yellow);
-        color: var(--color-white);
-      }
-    }
-  }
-
-  @media (max-width: 720px) {
     .inner {
-      width: min(100% - 32px, 1440px);
-      grid-template-columns: 1fr;
-      gap: 42px;
+        display: grid;
+        width: min(100% - 64px, 1440px);
+        grid-template-columns: 1fr auto;
+        gap: 50px;
+        margin: 0 auto;
+    }
+
+    .credit {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .logo {
+        display: inline-flex;
+        width: 90px;
+        min-height: 46px;
+        align-items: center;
+        margin-bottom: 20px;
+
+        img {
+            width: 90px;
+            max-height: 44px;
+            object-fit: contain;
+        }
+    }
+
+    .credit p {
+        max-width: 320px;
+        color: #c6c4bb;
+        font-size: 13px;
+    }
+
+    .credit p a {
+        color: var(--color-white);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    .source {
+        display: inline-flex;
+        min-height: 42px;
+        align-items: center;
+        gap: 8px;
+        margin-top: 22px;
+        padding: 0 12px;
+        border: 1px solid #65655e;
+        font-size: 13px;
+        transition:
+            border-color 160ms ease,
+            box-shadow 160ms ease;
+
+        &:hover,
+        &:focus-visible {
+            border-color: var(--color-yellow);
+            box-shadow: 0 3px 0 var(--color-yellow);
+        }
     }
 
     .links {
-      gap: 30px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(120px, auto));
+        gap: 50px;
     }
-  }
 
-  @media (max-width: 420px) {
-    .links {
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
+    .group {
+        display: grid;
+        align-content: start;
+        justify-items: start;
+        gap: 9px;
+
+        h2 {
+            margin-bottom: 6px;
+            color: var(--color-yellow);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        a {
+            color: #d0cec6;
+            font-size: 13px;
+            transition:
+                color 160ms ease,
+                box-shadow 160ms ease;
+
+            &:hover,
+            &:focus-visible {
+                box-shadow: 0 1px 0 var(--color-yellow);
+                color: var(--color-white);
+            }
+        }
     }
-  }
+
+    @media (max-width: 720px) {
+        .inner {
+            width: min(100% - 32px, 1440px);
+            grid-template-columns: 1fr;
+            gap: 42px;
+        }
+
+        .links {
+            gap: 30px;
+        }
+    }
+
+    @media (max-width: 420px) {
+        .links {
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+    }
 }
